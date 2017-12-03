@@ -5,78 +5,73 @@
 #include <cmath>
 using namespace std;
 
+void input(char a[], int& numberUsed);
+//Fills array a with user input.
+
 void deleteRepeats(char a[], int& numberUsed);
 //Precondition: Array a is partially filled. numberUsed >= 1.
 //Postcondition: Deletes all repeated letters of array a.
-
-int indexOfReplica(char a[], int& numberUsed, int targetIndex);
-//Precondition: Array a is partially filled. numberUsed >= 1.targetIndex is either 
-//positive or negative.
-//Postcondition: Returns the index of the element containing the repeated letter.
 
 void fillGap(char a[], int& numberUsed, int indexOfReplica);
 //Precondition: Array a is partially filled. numberUsed >= 1.
 //indexOfReplica is either negative or positive.
 //Postcondition: All remaining letters are moved forward to fill in the gap.
 
+void output(char a[], int numberUsed);
+//Precondition: Array a is partially filled. numberUsed >= 1.
+//Postcondition: Prints the contents of array a.
+
 int main()
 {
-	int nU = 0;
+	int numberUsed = 0;
 	char a[20];
     
+    input(a, numberUsed);
+	deleteRepeats(a, numberUsed);
+    output(a, numberUsed);
+    
+	return 0;
+}
+
+void input(char a[], int& numberUsed)
+{
     cout<<"Enter up to 19 letters: ";
-    char ans;
     do
     {
-        cin>>a[nU++];
+        cin>>a[numberUsed++];
     }while(cin.peek() != '\n');
-
-	deleteRepeats(a, nU);
-
-	for (int i = 0; i < nU; i++)
-		cout<<a[i]<<" ";
-    cout<<endl;
-
-	return 0;
 }
 
 void deleteRepeats(char a[], int& numberUsed)
 {
+    //Boolean array that stores flags indicating if a letter has been found.
+    bool found[256] = {false};
+
 	int indexOfNextReplica;
 
 	for(int i = 0; i < numberUsed; i++)
 	{
-		indexOfNextReplica = indexOfReplica(a, numberUsed, i);
-		fillGap(a, numberUsed, indexOfNextReplica);
+		if (found[a[i]] == false)
+            found[a[i]] = true;
+        else
+        {
+		    fillGap(a, numberUsed, i);
+            i -= 1;
+        }
 	}
-}
-
-int indexOfReplica(char a[], int& numberUsed, int targetIndex)
-{
-	bool found = false;
-	int index = targetIndex + 1;
-
-	while (!(found) && index < numberUsed)
-	{
-		if (tolower(a[index]) == tolower(a[targetIndex]))
-			found = true;
-		else
-			index++;
-	}
-
-	if(found)
-		return index;
-	else
-		return - 1;
 }
 
 void fillGap(char a[], int& numberUsed, int indexOfReplica)
 {
-	if (indexOfReplica == -1)
-		return;
-	
 	for(int i = indexOfReplica; i < numberUsed; i++)
 		a[i] = a[i + 1];
 
 	numberUsed--;
+}
+
+void output(char a[], int numberUsed)
+{
+	for (int i = 0; i < numberUsed; i++)
+		cout<<a[i]<<" ";
+    cout<<endl;
 }
