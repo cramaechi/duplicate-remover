@@ -51,7 +51,7 @@ void deleteRepeats(char a[], int& numberUsed)
 
     for(int i = 0; i < numberUsed; i++)
     {
-        if (found[a[i]] == false)
+        if (found[tolower(a[i])] == false)
             found[a[i]] = true;
         else
         {
