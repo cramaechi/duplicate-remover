@@ -23,14 +23,14 @@ void output(char a[], int numberUsed);
 
 int main()
 {
-	int numberUsed = 0;
-	char a[20];
-    
+    int numberUsed = 0;
+    char a[20];
+
     input(a, numberUsed);
-	deleteRepeats(a, numberUsed);
+    deleteRepeats(a, numberUsed);
     output(a, numberUsed);
-    
-	return 0;
+
+    return 0;
 }
 
 void input(char a[], int& numberUsed)
@@ -47,31 +47,31 @@ void deleteRepeats(char a[], int& numberUsed)
     //Boolean array that stores flags indicating if a letter has been found.
     bool found[256] = {false};
 
-	int indexOfNextReplica;
+    int indexOfNextReplica;
 
-	for(int i = 0; i < numberUsed; i++)
-	{
-		if (found[a[i]] == false)
+    for(int i = 0; i < numberUsed; i++)
+    {
+        if (found[a[i]] == false)
             found[a[i]] = true;
         else
         {
-		    fillGap(a, numberUsed, i);
+            fillGap(a, numberUsed, i);
             i -= 1;
         }
-	}
+    }
 }
 
 void fillGap(char a[], int& numberUsed, int indexOfReplica)
 {
-	for(int i = indexOfReplica; i < numberUsed; i++)
-		a[i] = a[i + 1];
+    for(int i = indexOfReplica; i < numberUsed; i++)
+        a[i] = a[i + 1];
 
-	numberUsed--;
+    numberUsed--;
 }
 
 void output(char a[], int numberUsed)
 {
-	for (int i = 0; i < numberUsed; i++)
-		cout<<a[i]<<" ";
+    for (int i = 0; i < numberUsed; i++)
+        cout<<a[i]<<" ";
     cout<<endl;
 }
